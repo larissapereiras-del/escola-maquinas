@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "api/*.js": {
-      "runtime": "nodejs20.x"
-    }
-  },
   "rewrites": [
     { "source": "/cadastro", "destination": "/cadastro.html" },
     { "source": "/", "destination": "/index.html" }
