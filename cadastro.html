@@ -118,12 +118,12 @@ var MAKE_PRECADASTRO_URL = '/api/precadastro';
 // Parâmetros — em produção virão da URL, no Make virão do link do e-mail
 var params  = new URLSearchParams(window.location.search);
 var agendId = params.get('id')     || '';
-var treino  = params.get('treino') || '';
+var treino  = params.get('treinamento') || params.get('treino') || '';
 var data    = params.get('data')   || '';
 var turno   = params.get('turno')  || '';
 var solNome = params.get('nome')   || '';
 var cad     = params.get('cad')    || '';
-var qtd     = parseInt(params.get('qtd')) || 1;
+var qtd     = parseInt(params.get('operadores') || params.get('qtd')) || 1;
 
 // Mostra box do agendamento se tiver dados
 if (treino || data) {
