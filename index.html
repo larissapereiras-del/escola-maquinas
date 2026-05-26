@@ -1214,7 +1214,7 @@ function enviar(){
       document.getElementById('f-wpp').value='';
       document.getElementById('f-email').value='';
       document.getElementById('f-qtd').value='';
-      document.getElementById('f-obs').value='';
+      document.querySelectorAll('input[name="f-local"]').forEach(function(r){r.checked=false;});document.querySelectorAll('.local-opt').forEach(function(el){el.classList.remove('selected');});
       document.getElementById('form-date-display').textContent='Selecione uma data no calendário →';
       document.getElementById('form-date-display').className='form-date-sel empty';
       document.getElementById('turno-section').style.display='none';
