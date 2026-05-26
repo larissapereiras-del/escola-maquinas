@@ -711,6 +711,20 @@ function vagasUsadas(tr, ds, tn) {
 function vagasLivres(tr, ds, tn) {
   return Math.max(0, TURNOS[tn].max - vagasUsadas(tr, ds, tn));
 }
+function vagasUsadasGlobal(ds, tn) {
+  var total = 0;
+  for (var k in vagasData) {
+    var parts = k.split('|');
+    if (parts.length === 3 && parts[1] === ds && parts[2] === tn) {
+      total += vagasData[k];
+    }
+  }
+  return total;
+}
+function vagasLivresGlobal(ds, tn) {
+  return Math.max(0, TURNOS[tn].max - vagasUsadasGlobal(ds, tn));
+}
+
 function fmtDate(d){return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear();}
 
 // ═══════════════════════════════════════════════
@@ -885,7 +899,7 @@ function renderTurnos(){
   var ds=fmtDate(selectedDate),lb=KL[currentKey],h='',ks=['T1','T2','T3'];
   for(var i=0;i<ks.length;i++){
     var k=ks[i],t=TURNOS[k];
-    var lv=lb?vagasLivres(lb,ds,k):t.max;
+    var lv=vagasLivresGlobal(ds,k);
     var full=lv===0,sel=selectedTurno===k;
     var vc=lv>6?'ok':lv>2?'low':'zero';
     var vt=full?'Esgotado':lv+(lv!==1?' vagas':' vaga')+' livre'+(lv!==1?'s':'');
@@ -899,7 +913,7 @@ function selecionarTurno(k){
   selectedTurno=k;
   renderTurnos();
   var t=TURNOS[k],ds=fmtDate(selectedDate),lb=KL[currentKey];
-  var lv=lb?vagasLivres(lb,ds,k):t.max;
+  var lv=vagasLivresGlobal(ds,k);
   var dd=document.getElementById('form-date-display');
   dd.textContent='📅 '+selectedDate.toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long',year:'numeric'})+' | '+k+' ('+t.hora+') | '+lv+(lv!==1?' vagas':' vaga')+' livre'+(lv!==1?'s':'');
   var qtdEl=document.getElementById('f-qtd');
@@ -924,7 +938,7 @@ function validarQtd(){
 
   var ds=fmtDate(selectedDate);
   var lb=KL[currentKey];
-  var lv=lb?vagasLivres(lb,ds,selectedTurno):TURNOS[selectedTurno].max;
+  var lv=vagasLivresGlobal(ds,selectedTurno);
   var total=TURNOS[selectedTurno].max;
 
   var icon=document.getElementById('vagas-icon');
