@@ -605,12 +605,12 @@ const MAQ=[
    d:'Formação para operação de rebocadora e tugger, utilizados no transporte de cargas em longas distâncias dentro do armazém. Inclui acoplamento de carretas, fluxos de circulação e segurança no trânsito interno.',
    extra:['Formação em Condução de Rebocadora (NR11 e NR12)','Reciclagem anual: 6h','Cargo: Op Log / Rep 3','Carga horária total: 8 horas']},
 
-  {id:6,key:'embarcada',img:IMG_E,vld:false,cad:true,hidden:true,t:'Embarcada',nrs:['NR11','NR12'],
+  {id:6,key:'embarcada',img:IMG_E,vld:false,cad:true,t:'Embarcada',nrs:['NR11','NR12'],
    dias:[{txt:'No seu CAD',c:'blue'}],dur:'1 dia · 8h',nv:'Basico',cert:'Certificado + Carteirinha',
    d:'Formação para condução embarcada e manobras em espaços reduzidos, realizada diretamente no CAD do operador.',
    extra:['NR11 e NR12','Realizado no próprio CAD','Agendamento: consultar CAD']},
 
-  {id:7,key:'validacao',img:IMG_V,vld:true,cad:false,hidden:true,t:'Validação de Empilhadeira',nrs:['NR11','NR12'],
+  {id:7,key:'validacao',img:IMG_V,vld:true,cad:false,t:'Validação de Empilhadeira',nrs:['NR11','NR12'],
    dias:[{txt:'Consultar CAD',c:'blue'}],dur:'Teste prático · 1 dia',nv:'Avancado',cert:'Validação Técnica',
    d:'A Escola de Máquinas não forma operadores de empilhadeira — apenas valida tecnicamente certificados externos. O operador apresenta comprovação de formação, passa por avaliação prática e, se aprovado, recebe habilitação interna.',
    extra:['Ensino Médio Completo obrigatório','Formação externa comprovada em Condução de Empilhadeira','Clamp: adicionalmente 3 anos de experiência','Reciclagem anual: 8h']},
@@ -729,7 +729,7 @@ function fmtDate(d){return String(d.getDate()).padStart(2,'0')+'/'+String(d.getM
 // BUILD CARDS
 // ═══════════════════════════════════════════════
 function buildAll(){
-  document.getElementById('grid-maq').innerHTML=MAQ.filter(function(m){return !m.hidden;}).map(function(m){
+  document.getElementById('grid-maq').innerHTML=MAQ.map(function(m){
     var badge=m.vld?'<span class="mcard-badge vld">Validação</span>':m.cad?'<span class="mcard-badge cad">No seu CAD</span>':'';
     var dias=m.dias.map(function(d){return '<span class="day-pill '+d.c+'">'+d.txt+'</span>';}).join('');
     var nrs=m.nrs.map(function(n){return '<span class="nr-pill">'+n+'</span>';}).join('');
