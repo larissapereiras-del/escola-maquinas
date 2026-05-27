@@ -70,6 +70,7 @@ export default async function handler(req, res) {
           dados.timestamp || timestamp,
           dados.turno     || '',
           dados.email     || '',
+          dados.local     || '',
         ]]
       }
     });
