@@ -155,7 +155,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--dk);color:var(--w);overfl
 .finput:focus,.fselect:focus,.ftextarea:focus{outline:none;border-color:rgba(245,200,0,.35)}
 .fselect{appearance:none;cursor:pointer}
 .ftextarea{resize:vertical;min-height:60px}
-
 .fselect option{background:#1c2860}
 .fsubmit{background:var(--y);color:#000;border:none;border-radius:10px;padding:13px;font-family:'Rajdhani',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(245,200,0,.18)}
 .fsubmit:hover{background:var(--yd);transform:translateY(-1px)}
@@ -447,7 +446,10 @@ footer strong{color:var(--y)}
             </div>
           </div>
         </div>
-        <div class="fgroup"><label class="flabel">Observações</label><textarea id="f-obs" class="ftextarea" placeholder="Alguma observação? (opcional)"></textarea></div>
+        <div class="fgroup">
+          <label class="flabel">Observações</label>
+          <textarea class="ftextarea" id="f-obs" placeholder="Outras informações relevantes..."></textarea>
+        </div>
 
         <button class="fsubmit" id="f-btn" onclick="enviar()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
@@ -1101,8 +1103,6 @@ function closeM(){document.getElementById('overlay').classList.remove('open');}
 // ═══════════════════════════════════════════════
 // ENVIAR
 // ═══════════════════════════════════════════════
-);
-}
 function enviar(){
   var nome=document.getElementById('f-nome').value.trim();
   var galpao=document.getElementById('f-galpao').value.trim();
@@ -1116,7 +1116,6 @@ function enviar(){
   if(!treino){alert('Selecione o treinamento.');return;}
   if(!selectedDate){alert('Selecione uma data no calendário.');return;}
   if(!selectedTurno){alert('Selecione um turno.');return;}
-  
   if(!nome){alert('Informe seu nome.');return;}
   if(!galpao){alert('Informe o CAD.');return;}
   if(!wpp){alert('Informe seu WhatsApp.');return;}
