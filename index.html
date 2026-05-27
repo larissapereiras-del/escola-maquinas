@@ -154,7 +154,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--dk);color:var(--w);overfl
 .finput,.fselect,.ftextarea{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:9px 13px;font-size:.83rem;color:var(--w);font-family:'DM Sans',sans-serif;transition:border-color .18s;width:100%}
 .finput:focus,.fselect:focus,.ftextarea:focus{outline:none;border-color:rgba(245,200,0,.35)}
 .fselect{appearance:none;cursor:pointer}
-.ftextarea{resize:vertical;min-height:60px}
+.ftextarea{resize:vertical;min-height:60px}.local-opts{display:flex;gap:8px;flex-direction:column}.local-opt{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:10px 13px;cursor:pointer;transition:border-color .18s;font-size:.83rem;color:var(--w);font-family:'DM Sans',sans-serif}.local-opt:hover{border-color:rgba(245,200,0,.35)}.local-opt input{accent-color:var(--y);width:16px;height:16px;flex-shrink:0;cursor:pointer}.local-opt.selected{border-color:rgba(245,200,0,.7);background:rgba(245,200,0,.08)}
 .fselect option{background:#1c2860}
 .fsubmit{background:var(--y);color:#000;border:none;border-radius:10px;padding:13px;font-family:'Rajdhani',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .18s;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(245,200,0,.18)}
 .fsubmit:hover{background:var(--yd);transform:translateY(-1px)}
@@ -1103,6 +1103,7 @@ function closeM(){document.getElementById('overlay').classList.remove('open');}
 // ═══════════════════════════════════════════════
 // ENVIAR
 // ═══════════════════════════════════════════════
+function updateLocalOpt(){document.querySelectorAll('.local-opt').forEach(function(el){el.classList.toggle('selected',el.querySelector('input').checked);});}
 function enviar(){
   var nome=document.getElementById('f-nome').value.trim();
   var galpao=document.getElementById('f-galpao').value.trim();
@@ -1111,6 +1112,8 @@ function enviar(){
   var treino=document.getElementById('f-treino').value;
   var qtd=parseInt(document.getElementById('f-qtd').value||'0')||0;
   var obs=document.getElementById('f-obs').value.trim();
+  var local=(document.querySelector('input[name="f-local"]:checked')||{value:''}).value;
+  if(!local){alert('Selecione o local do treinamento.');return;}
 
   // Validações em ordem lógica
   if(!treino){alert('Selecione o treinamento.');return;}
@@ -1171,7 +1174,7 @@ function enviar(){
   btn.disabled=true;
   btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg> Enviando...';
 
-  var p={nome:nome,galpao:galpao,wpp:wpp,email:email,cad:galpao,treino:KL[treino]||treino,qtd:String(qtd),obs:obs,data:ds,turno:selectedTurno,timestamp:new Date().toLocaleString('pt-BR')};
+  var p={nome:nome,galpao:galpao,wpp:wpp,email:email,cad:galpao,treino:KL[treino]||treino,qtd:String(qtd),obs:obs,local:local,data:ds,turno:selectedTurno,timestamp:new Date().toLocaleString('pt-BR')};
   fetch(MAKE_SALVAR_AGEND_URL, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -1197,6 +1200,8 @@ function enviar(){
       document.getElementById('f-email').value='';
       document.getElementById('f-qtd').value='';
       document.getElementById('f-obs').value='';
+    document.querySelectorAll('input[name="f-local"]').forEach(function(r){r.checked=false;});
+    document.querySelectorAll('.local-opt').forEach(function(el){el.classList.remove('selected');});
       document.getElementById('form-date-display').textContent='Selecione uma data no calendário →';
       document.getElementById('form-date-display').className='form-date-sel empty';
       document.getElementById('turno-section').style.display='none';
